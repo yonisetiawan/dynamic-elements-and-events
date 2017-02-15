@@ -7,7 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/sweetalert.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/css/semantic.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <title>Dynamic Elements and Events</title>
 </head>
 
@@ -47,7 +50,7 @@
                     <!-- <th></th> -->
                     <th colspan="4">
                         <div class="buttonStatus">
-                          <button onclick="warningAction('remove')" class="ui red button">Remove</button>
+                            <button onclick="warningAction('remove')" class="ui red button">Remove</button>
                             <div class="ui buttons">
                                 <button onclick="warningAction('Uncomplete')" class="ui teal button">Uncomplete</button>
                                 <div class="or"></div>
@@ -60,8 +63,13 @@
         </table>
     </div>
 
+    <script>
+        $(function() {
+            $("#listtodo").sortable();
+            $("#listtodo").disableSelection();
+        });
+    </script>
     <script type="text/javascript" src="./js/sweetalert.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="./js/index.js"></script>
     <script type="text/javascript" src="./js/semantic.min.js"></script>
 </body>

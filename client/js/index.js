@@ -38,7 +38,7 @@ function addTodos() {
                   tampung = `     <tr id="trID${result._id}">
                                       <td>${result.title}</td>
                                       <td>${result.description}</td>
-                                      <td> id="tdStatus${result._id}"${result.status}</td>
+                                      <td id="tdStatus${result._id}">${result.status}</td>
                                       <td class="collapsing">
                                           <div class="ui fitted checkbox">
                                               <input id="${result._id}" type="checkbox"><label name="actioncheck"></label>

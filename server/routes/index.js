@@ -10,4 +10,6 @@ router.get('/getAll', Todos.getAll);
 
 router.delete('/delete', Todos.delete);
 
+router.put('/update', Todos.update);
+
 module.exports = router;

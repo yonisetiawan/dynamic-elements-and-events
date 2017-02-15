@@ -23,25 +23,20 @@ var Todos = {
                 res.send(result)
             });
     },
-    //
-    // update: function(req, res, next) {
-    //     var dataUpdate = JSON.parse(req.body.dataUpdate)
-    //     dataUpdate.forEach(function(data) {
-    //         modelsTodos.findById(data, function(err, result) {
-    //             if (err) res.send(err)
-    //             else {
-    //                 result.status = req.body.status
-    //                 result.save()
-    //             }
-    //         }, {
-    //             new: true
-    //         }).then(function(err, resultUpdate) {
-    //             if (err) res.send(err)
-    //             else
-    //                 res.send(resultUpdate)
-    //         })
-    //     })
-    // },
+
+    update: function(req, res, next) {
+        var dataUpdate = JSON.parse(req.body.arrId)
+        dataUpdate.forEach(function(data) {
+            modelsTodos.findById(data, function(err, result) {
+                if (err) res.send(err)
+                else {
+                    result.status = req.body.statusTodos
+                    result.save()
+                }
+            })
+        })
+        res.send(true)
+    },
     delete: function(req, res, next) {
         var dataRemove = JSON.parse(req.body.arrId)
         dataRemove.forEach(function(data) {
