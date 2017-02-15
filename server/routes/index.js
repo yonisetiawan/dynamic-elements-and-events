@@ -8,6 +8,6 @@ router.post('/add', Todos.add)
 
 router.get('/getAll', Todos.getAll);
 
-
+router.delete('/delete', Todos.delete);
 
 module.exports = router;

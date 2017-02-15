@@ -7,10 +7,10 @@ $(document).ready(function() {
             if (result) {
                 var tampung = ""
                 for (var i = result.length-1; i >= 0; i--) {
-                  tampung += `     <tr>
+                  tampung += `     <tr id="trID${result[i]._id}">
                                       <td>${result[i].title}</td>
                                       <td>${result[i].description}</td>
-                                      <td>${result[i].status}</td>
+                                      <td id="tdStatus${result[i]._id}">${result[i].status}</td>
                                       <td class="collapsing">
                                           <div class="ui fitted checkbox">
                                               <input id="${result[i]._id}" type="checkbox"><label name="actioncheck"></label>
@@ -35,10 +35,10 @@ function addTodos() {
           },
           success: function(result) {
               if (result) {
-                  tampung = `     <tr>
+                  tampung = `     <tr id="trID${result._id}">
                                       <td>${result.title}</td>
                                       <td>${result.description}</td>
-                                      <td>${result.status}</td>
+                                      <td> id="tdStatus${result._id}"${result.status}</td>
                                       <td class="collapsing">
                                           <div class="ui fitted checkbox">
                                               <input id="${result._id}" type="checkbox"><label name="actioncheck"></label>
@@ -55,9 +55,8 @@ function addTodos() {
 }
 
 function checkList(){
-  var list = $("#listtodo")
   var listId = $("#listtodo tr td.collapsing div input")
-  for (var i = 0; i < list.length; i++) {
+  for (var i = 0; i < listId.length; i++) {
       var id = $(listId[i]).attr("id")
       if ($(`#${id}`).is(':checked')) {
           return true
@@ -66,8 +65,8 @@ function checkList(){
   return false
 }
 
-function warningDelete(input) {
-    if(checkList()){
+function warningAction(input) {
+    if(checkList() && input == "remove"){
       swal({
               title: "Are you sure?",
               text: "Todos will be remove",
@@ -78,9 +77,63 @@ function warningDelete(input) {
               closeOnConfirm: false
           },
           function() {
+              checkAction(input)
               swal("Deleted!", "Your todos has been deleted.", "success");
           })
+    }else if(checkList() && input != "remove"){
+          checkAction(input)
     }else{
       swal("Warning !", "Silahkan Tandai List Todos")
     }
+}
+
+function checkAction(input) {
+  var arrId = []
+  var listId = $("#listtodo tr td.collapsing div input")
+  for (var i = 0; i < listId.length; i++) {
+      var id = $(listId[i]).attr("id")
+      if ($(`#${id}`).is(':checked')) {
+          if (input == "remove") {
+            document.getElementById(`trID${id}`).innerHTML = ""
+            arrId.push(id)
+          }else{
+            document.getElementById(`tdStatus${id}`).innerHTML = input
+            arrId.push(id)
+          }
+      }
+  }
+
+  if(input == "remove"){
+    deleteTodos(arrId)
+  }else{
+    updateStatus(arrId, input)
+  }
+}
+
+function updateStatus(arrId, input) {
+  $.ajax({
+      url: "http://localhost:3000/update",
+      type: "PUT",
+      data: {
+          arrId: JSON.stringify(arrId),
+          statusTodos: input
+      },
+      success: function(result) {
+          return result
+      }
+  });
+}
+
+function deleteTodos(arrId) {
+  $.ajax({
+      url: "http://localhost:3000/delete",
+      type: "DELETE",
+      data: {
+          arrId: JSON.stringify(arrId)
+      },
+      success: function(result) {
+          return result
+      }
+  });
+
 }

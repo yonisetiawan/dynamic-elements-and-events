@@ -43,25 +43,23 @@ var Todos = {
     //     })
     // },
     delete: function(req, res, next) {
-        var dataRemove = JSON.parse(req.body.dataRemove)
+        var dataRemove = JSON.parse(req.body.arrId)
         dataRemove.forEach(function(data) {
             modelsTodos.find({
                 _id: data
             },function(err, result) {
                 if (err) res.send(err)
-                else
-                    result[0].remove(function(err) {
-                        if (err) res.send(err)
-                        else {
-                            res.send({
-                                status: true
-                            })
-                        }
-                    })
+                else{
+                  result[0].remove(function(err) {
+                      if (err) res.send(err)
+                  })
+                }
             })
         })
+        res.send({
+          status: true
+        })
     }
-
 }
 
 module.exports = Todos
